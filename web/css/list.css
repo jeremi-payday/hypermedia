@@ -1,0 +1,217 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19-Sep-2016, 9:18:51 AM
+    Author     : guitp
+*/
+body{
+    padding-top: 3.5em;
+}
+
+.fmessages-container{
+    position: fixed;
+    width: 30%;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 3em;
+    
+}
+.fmessage{
+    
+    
+}
+
+.main-container{
+    display: flex;
+    
+}
+
+#available-items{
+    display: flex;
+    justify-content: flex-start;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    margin-left: 1em;
+}
+
+.item{
+    flex-shrink: 0;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #aaa;
+    padding: 1em;
+    box-sizing: border-box;
+    width: 300px;
+    height: 400px;
+    margin: 0.5em;
+    border-radius: 15px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+
+.item-name{
+    font-size: 2em;
+}
+
+.item-image-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+}
+.item-image{
+    height: 100%;
+}
+.item-desc{
+    height: 100px;
+    flex-shrink: 1;
+    flex-grow: 1;
+}
+.item-add-btn{
+    margin-top: 0.5em;
+}
+
+#panier{
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 4em;
+
+}
+#panier-toggle{
+    display: inline-flex;
+    width: 50px;
+    height: 50px;
+    background: white;
+    vertical-align: top;
+    align-items: center;
+    justify-content: flex-start;
+    margin-right: -0.3em;
+    border: 3px solid black;
+    border-right: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px; 
+    overflow: hidden;
+
+}
+#panier-toggle img{
+    height: 40px;
+    
+}
+#panier-counter{
+    font-size: 0.7em;
+    display: inline;
+    width: 1.5em;
+    height: 1.5em;
+    margin-left: -2.7em;
+    margin-top: -1em;
+    text-align: center;
+    line-height: 1.5em;
+    border-radius: 100%;
+    
+    
+}
+#panier-contents{
+    vertical-align: top;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 0;
+    height: 500px;
+    background: white;
+    transition: 1s all;
+    box-sizing: border-box;
+    border: 3px solid transparent;
+    box-shadow: -2px 2px 2px rgba(0,0,0,0.3);
+    margin-bottom: 1em;
+    border-right: 0px;
+    overflow-y: auto;
+    overflow-x:hidden;
+
+}
+.panier-out{
+    width: 350px!important;
+    border-color: black!important;
+}
+.panier-out .cart-item{
+    opacity: 1;
+}
+
+.cart-item{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 0.5em;
+    padding-right: 3em;
+    opacity: 0;
+    transition: 1s all;
+}
+.cart-item:nth-child(even){
+    background-color: #fafafa;
+}
+.cart-item-img{
+    height: 50px;
+
+}
+.cart-item-name{
+    flex-grow: 1;
+}
+.cart-item-quantity{
+    width: 3em;
+
+}
+.cart-item-remove{
+    width: 3em;
+}
+
+#header-bar-container{
+    top: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    height: 3em;
+    background: white;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 2em;
+    justify-content: space-between;
+    
+}
+.menu-list{
+    list-style: none;
+    margin-bottom: 0;
+    margin-top: 10px;
+    
+}
+.menu-list li{
+    display: inline-block;
+    font-size: 1.5em;
+    margin-left: 1em;
+    text-align: center;
+    
+}
+.menu-list li a{
+    color: black;
+}
+
+#sidebar{
+    width: 200px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    border-right: 1px solid rgba(0,0,0,0.3);
+    box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+}
