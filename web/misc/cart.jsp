@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="panier">
-    <div id="panier-toggle">
+    <div id="panier-toggle" class="border-dark">
         <img src="img/icons/cart.png">
        
         <c:set var="totalItemCount" value="${sessionScope.cart.getTotalItemCount()}"/>
@@ -8,10 +8,10 @@
             <div id="panier-counter">
                 <c:choose>
                     <c:when test="${totalItemCount > 99}">
-                        99+
+                        <span class="text-orange" style="font-weight: bold; font-size: 0.8em;">99+</span>
                     </c:when>
                     <c:otherwise>
-                        <c:out value="${totalItemCount}"/>
+                        <span class="text-orange" style="font-weight: bold;"><c:out value="${totalItemCount}"/></span>
                     </c:otherwise>
                 </c:choose>
                 
@@ -25,7 +25,7 @@
     <c:if test="${sessionScope.cartTabOut}">
         <c:set var="panierOut" value="panier-out"/>
     </c:if>
-    <div id="panier-contents" class="${panierOut}">
+    <div id="panier-contents" class="${panierOut} border-dark">
         <center>
             <h3 style="margin-top: 0.5em;">Cart</h3>
         </center>

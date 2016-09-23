@@ -16,7 +16,7 @@
         <title>Listing items</title>
         <link rel="stylesheet" href="css/list.css">
     </head>
-    <body>
+    <body class="background-ligh-gray">
         <%@include file="/misc/topHeaderBar.jsp" %>
         <%@include file="/misc/cart.jsp"%>
         <%@include file="/misc/flashSessionDisplay.jsp" %>
