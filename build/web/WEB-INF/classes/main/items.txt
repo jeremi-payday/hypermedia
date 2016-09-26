@@ -1,0 +1,10 @@
+1;item1;quelquechose;img/item/item1.jpg
+
+2;cube;un cube rubik :D;img/item/item1.jpg
+
+3;boeuf;du beuf...;img/item/item2.jpg
+
+4;pommes;des pommes...;img/item/item1.jpg
+
+5;salade;de la salade...;img/item/item2.jpg
+
