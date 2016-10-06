@@ -6,10 +6,12 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,17 +27,20 @@ import misc.FlashSession;
 public class List extends HttpServlet {
 
     Vector<Item> items;
-    String filepath = "C:\\Users\\guitp\\Desktop\\items.txt";
+    String filename = "/WEB-INF/items.txt";
+    ServletContext context;
+    InputStream inputStream;
     
     @Override
     public void init(){
+        context = getServletContext();
+        inputStream = context.getResourceAsStream(filename);
         this.items = new Vector<Item>();
         try{
             initItems();
-        }catch(Exception e){
+        }catch(IOException e){
             e.printStackTrace();
         }
-        
     }
     
     @Override
@@ -53,8 +58,6 @@ public class List extends HttpServlet {
             fs = (FlashSession)request.getSession().getAttribute("flashSession");
         }
         
-        //fs.addMessage("test2", FlashMessage.Types.SUCCESS);
-        
         
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
@@ -63,10 +66,10 @@ public class List extends HttpServlet {
             throws ServletException, IOException{
         
         request.setAttribute("items", this.items);
-        //out.println(resp);
     }
+    
     private void initItems()throws IOException{
-        BufferedReader bf = new BufferedReader(new FileReader(this.filepath));
+        BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
         try{
             String item = bf.readLine();
             do{
