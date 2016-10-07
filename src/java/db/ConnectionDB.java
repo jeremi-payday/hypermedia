@@ -17,11 +17,13 @@ import java.util.logging.Logger;
  */
 public class ConnectionDB {
     
-    private static final String URL_CONNECTION = "jdbc:sqlite:/WEB-INF/sqlite.db";
+    private static final String URL_CONNECTION = "jdbc:sqlite:";
     
     private Connection connection;
+    private String realPath;
     
-    public ConnectionDB(){
+    public ConnectionDB(String realPath){
+        this.realPath = realPath;
         init();
     }
     
@@ -29,16 +31,14 @@ public class ConnectionDB {
         connect();
     }
     
-    public void connect(){
-        if(connection != null){
-            try {
-                Class.forName("org.sqlite.JDBC");
-                this.connection = DriverManager.getConnection(URL_CONNECTION);
-            } catch (ClassNotFoundException classNotFoundException) {
-                Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, classNotFoundException);
-            } catch (SQLException sqlException) {
-                Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, sqlException);
-            }
+    private void connect(){
+        try {
+            Class.forName("org.sqlite.JDBC");
+            this.connection = DriverManager.getConnection(URL_CONNECTION + this.realPath);
+        } catch (ClassNotFoundException classNotFoundException) {
+            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, classNotFoundException);
+        } catch (SQLException sqlException) {
+            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, sqlException);
         }
     }
     

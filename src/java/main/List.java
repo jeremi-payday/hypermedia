@@ -46,16 +46,21 @@ public class List extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        FlashSession fs;
-        listItems(request, response);
         
-        if(request.getSession().getAttribute("flashSession") == null){
-            fs = new FlashSession();
-            request.getSession().setAttribute("flashSession", fs);
-        }else{
-            fs = (FlashSession)request.getSession().getAttribute("flashSession");
+        String username = (String)request.getSession().getAttribute("username");
+        
+        if(username != null){
+            FlashSession fs;
+            listItems(request, response);
+
+            if(request.getSession().getAttribute("flashSession") == null){
+                fs = new FlashSession();
+                request.getSession().setAttribute("flashSession", fs);
+            }else{
+                fs = (FlashSession)request.getSession().getAttribute("flashSession");
+            }
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
     
     private void listItems(HttpServletRequest request, HttpServletResponse response)

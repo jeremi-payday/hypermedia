@@ -13,12 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import main.User;
 
 /**
  *
  * @author Alex
  */
-@WebServlet(name = "login", urlPatterns = {"/login"})
+@WebServlet(name = "Login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
 
     private LoginDAO loginDAO;
@@ -27,22 +28,24 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
-
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = (String)request.getAttribute("username");
-        String password = (String)request.getAttribute("password");
+        String username = (String)request.getParameter("username");
+        String password = (String)request.getParameter("password");
         
-        connectionDB = new ConnectionDB();
+        String realPath = getServletContext().getRealPath("WEB-INF/sqlite.db");
+        
+        connectionDB = new ConnectionDB(realPath);
         loginDAO = new LoginDAO(connectionDB.getConnection());
         
-        boolean validUser = loginDAO.isUserValid(username, password);
-        request.getSession().setAttribute("validUser", validUser);
-        
+        if(loginDAO.isUserValid(username, password)){
+            User userValid = loginDAO.getUser(username);
+            request.getSession().setAttribute("userID", userValid.getId());
+            request.getSession().setAttribute("username", userValid.getUsername());
+        }
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }

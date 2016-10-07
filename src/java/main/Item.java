@@ -10,8 +10,9 @@ package main;
  * @author jeremi
  */
 public class Item {
-    public int id;
-    public String name, description, image;
+    
+    private int id;
+    private String name, description, image;
 
     public Item(int id, String name, String description, String image) {
         this.id = id;
@@ -22,10 +23,6 @@ public class Item {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
