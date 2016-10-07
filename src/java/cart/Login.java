@@ -5,6 +5,8 @@
  */
 package cart;
 
+import db.ConnectionDB;
+import db.LoginDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
 
+    private LoginDAO loginDAO;
+    private ConnectionDB connectionDB;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,5 +34,15 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String username = (String)request.getAttribute("username");
+        String password = (String)request.getAttribute("password");
+        
+        connectionDB = new ConnectionDB();
+        loginDAO = new LoginDAO(connectionDB.getConnection());
+        
+        boolean validUser = loginDAO.isUserValid(username, password);
+        request.getSession().setAttribute("validUser", validUser);
+        
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
