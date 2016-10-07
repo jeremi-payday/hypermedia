@@ -46,10 +46,8 @@ public class List extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         FlashSession fs;
         listItems(request, response);
-        
         
         if(request.getSession().getAttribute("flashSession") == null){
             fs = new FlashSession();
@@ -57,8 +55,6 @@ public class List extends HttpServlet {
         }else{
             fs = (FlashSession)request.getSession().getAttribute("flashSession");
         }
-        
-        
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
     
@@ -79,20 +75,15 @@ public class List extends HttpServlet {
                 
                 item = bf.readLine();
             }while(item != null);
-            
-            
         }finally{
             bf.close();
         }
-        
-        
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
 
