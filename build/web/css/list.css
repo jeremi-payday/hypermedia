@@ -61,20 +61,32 @@ body{
 }
 
 .normalized-form-popup{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 500px;
+    height: 400px;
+    overflow: hidden;
     position: fixed;
     left: calc( 50% - 500px );
     top: 5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     box-sizing: border-box;
     border-radius: 2em;
     background: white;
     border: 1px solid #E9E9E9;
+}
+.normalized-form-group{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 1em;
-    color: #424242;
-    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+}
+.normalized-form-popup h1{
+    margin: 0;
 }
 .normalized-form-popup label{
     margin-right: 1em;
@@ -314,4 +326,25 @@ body{
     border-right-width: 1px;
     border-style: solid;
     box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+}
+
+.normalized-form-group#login-form{
+    margin-top: -100%;
+    transition: 1s all;
+}
+.normalized-form-group#register-form{
+    margin-top: 100%;
+    transition: 1s all;
+}
+.normalized-form-group#register-form.active, .normalized-form-group#login-form.active{
+    margin-top: 0;
+}
+
+.button-link{
+    cursor: pointer;
+    color: #e2a430;
+    font-weight: bold;
+}
+.button-link:hover{
+    color: #e2a430;
 }

@@ -19,9 +19,21 @@ import main.User;
  */
 public class LoginDAO {
     
+    public static enum MESSAGE_CODE {
+        //errors
+        USER_DOES_NOT_EXIST,
+        USER_ALREADY_EXISTS,
+        INVALID_PASSWORD,
+        REGISTERING_ERROR,
+    
+        //success
+        USER_REGISTERED
+    }
+    
     private static final String USER_LOGIN_QUERY = "SELECT id, username FROM user WHERE username = ? AND password = ?";
     private static final String USER_ID_QUERY = "SELECT id, username FROM user WHERE id = ?";
     private static final String USER_USERNAME_QUERY = "SELECT id, username FROM user WHERE username = ?";
+    private static final String USER_REGISTER = "INSERT INTO user (username, password) VALUES(?, ?)";
     
     private Connection connection;
     
@@ -73,6 +85,20 @@ public class LoginDAO {
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return user;
+    }
+    
+    public LoginDAO.MESSAGE_CODE registerUser(User user){
+        try {
+            PreparedStatement preparedStatement = this.connection.prepareStatement(USER_REGISTER);
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return LoginDAO.MESSAGE_CODE.REGISTERING_ERROR;
+        }
+        return LoginDAO.MESSAGE_CODE.USER_REGISTERED;
     }
     
 }

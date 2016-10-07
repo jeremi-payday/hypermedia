@@ -8,7 +8,24 @@
         <ul class="menu-list">
             <li><a href="/hypermedia">Accueil</a></li>
             <li><a href="/hypermedia/list">Produits</a></li>
-            <li><a>Connexion</a></li>
+            <li style="cursor: pointer">
+                <c:choose>
+                    <c:when test="${sessionScope.user != null}">
+                        <span style="font-size: 0.7em;">Bonjour</span> <b class="text-orange" style="font-size: 1.2em;">${sessionScope.user.getUsername()}</b>
+                    </c:when>
+                    <c:otherwise>
+                      <a id="connect-button">Connexion</a>
+                    </c:otherwise>
+                </c:choose>
+                
+            </li>
         </ul>
     </div>
 </div>
+
+<%@include file="/misc/loginForm.jsp"%>
+<script>
+    $("#connect-button").on("click", function(){
+        $("#login-popup").css("visibility","visible");
+    })
+</script>

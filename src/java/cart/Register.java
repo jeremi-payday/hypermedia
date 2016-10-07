@@ -17,10 +17,10 @@ import main.User;
 
 /**
  *
- * @author Alex
+ * @author guitp
  */
-@WebServlet(name = "Login", urlPatterns = {"/login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "Register", urlPatterns = {"/register"})
+public class Register extends HttpServlet {
 
     private LoginDAO loginDAO;
     private ConnectionDB connectionDB;
@@ -28,25 +28,38 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
     }
+
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = (String)request.getParameter("username");
         String password = (String)request.getParameter("password");
-        
+        String responseJSONObject = "{\"state\": \"error\", \"message\": \"failed to register user\"}";;
         String realPath = getServletContext().getRealPath("WEB-INF/sqlite.db");
+        
+        User newUser = new User(username, password);
         
         connectionDB = new ConnectionDB(realPath);
         loginDAO = new LoginDAO(connectionDB.getConnection());
         
-        
-        if(loginDAO.isUserValid(username, password)){
-            User userValid = loginDAO.getUser(username);
-            request.getSession().setAttribute("user", loginDAO.getUser(username));
-        }
-        
+        LoginDAO.MESSAGE_CODE register_state = loginDAO.registerUser( newUser );
         connectionDB.close();
+        
+        
+        switch(register_state){
+            case USER_REGISTERED:
+                responseJSONObject = "{\"state\": \"success\", \"message\": \"user successfully registered\"}";
+                break;
+            
+        }
+        request.getRequestDispatcher("login").include(request, response);
+        response.getWriter().println(responseJSONObject);
+        
+
     }
+
+
 }

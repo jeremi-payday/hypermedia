@@ -4,7 +4,6 @@
 <div class="main-container">
     <%@include file="/misc/productsSidebar.jsp" %>
     <%@include file="/misc/itemlist.jsp"%>
-    <%@include file="/misc/loginForm.jsp"%>
 </div>
     <script>
 

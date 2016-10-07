@@ -47,8 +47,8 @@ public class List extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String username = (String)request.getSession().getAttribute("username");
-        
+        User user = (User)request.getSession().getAttribute("user");
+        String username = user.getUsername();
         if(username != null){
             FlashSession fs;
             listItems(request, response);
