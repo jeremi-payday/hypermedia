@@ -6,8 +6,8 @@
     
     <div>
         <ul class="menu-list">
-            <li><a>Accueil</a></li>
-            <li><a>Produits</a></li>
+            <li><a href="/hypermedia">Accueil</a></li>
+            <li><a href="/hypermedia/list">Produits</a></li>
             <li><a>Connexion</a></li>
         </ul>
     </div>

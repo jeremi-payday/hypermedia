@@ -6,45 +6,41 @@
     </div>
     <div class="normalized-form-section">
         <div class="error-msg" style="visibility: hidden;">
-            
+        
         </div>
         <div>
             <label for="username">Username:</label><input type="text" id="username" name="username"/>
         </div>
         <div>
-            <label for="password">Password:</label><input id="password" type="password" name="password"/>
+            <label for="password">Password:</label><input type="password" id="password" name="password"/>
         </div>
         <div>
             <button id="login-btn" class="normalized-form-button btn background-orange text-white">
                 Log in
             </button>
         </div>
-        
     </div>
 </div>
 
 <script>
-    $(".normalized-form-button#login-btn").on("click",function(){
+    $("#login-btn").click(function(){
         var formcontainer = $(this).closest(".normalized-form-popup");
         $.ajax({
-            url: "www.google.ca",
+            url: "login",
             type: "post",
             data:{
-                username: formcontainer.find("#username"),
-                password: formcontainer.find("#password")
+                username: $("#username").val(),
+                password: $("#password").val()
             },
-            success: function(res){
+            success: function(){
                 
             },
-            error: function(res){
-                var error = JSON.parse(res);
-                alert();
-                formcontainer.find(".error-msg").text("error.message");
+            error: function(){
+                formcontainer.find(".error-msg").text("Something wrong happened..");
                 formcontainer.find(".error-msg").css({
                     visibility: "visible",
                     color: "red"
                 });
-                
             }
         });
     });
