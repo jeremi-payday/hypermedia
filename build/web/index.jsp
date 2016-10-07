@@ -28,17 +28,14 @@
                         desc: itemdesc,
                         img: itemimage
                     },
-                    success: function(resp){
+                    success: function(){
                         if(!$("#panier-toggle").hasClass("panier-out")){
                             $.ajax({
                                 url: "cart/misc",
                                 type: "POST",
                                 data:{
                                     actionType: "toggleTab",
-                                    actionVal: "true",
-                                },
-                                success: function(resp){
-
+                                    actionVal: "true"
                                 }
                             });
                         }
@@ -63,7 +60,7 @@
                         desc: itemdesc,
                         img: itemimage
                     },
-                    success: function(resp){
+                    success: function(){
                         
                         location.reload();
                     }
@@ -79,9 +76,6 @@
                     data:{
                         actionType: "toggleTab",
                         actionVal: ""+$("#panier-contents").hasClass("panier-out")
-                    },
-                    success: function(resp){
-                        
                     }
                 });
                 
