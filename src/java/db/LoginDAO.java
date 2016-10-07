@@ -7,6 +7,7 @@ package db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,11 +31,15 @@ public class LoginDAO {
         
         try {
             PreparedStatement preparedStatement = this.connection.prepareStatement(USER_LOGIN_QUERY);
-            
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                valid = true;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         return valid;
     }
     
