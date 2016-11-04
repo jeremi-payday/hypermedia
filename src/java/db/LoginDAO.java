@@ -31,9 +31,9 @@ public class LoginDAO {
     }
     
     private static final String USER_LOGIN_QUERY = "SELECT id, username FROM user WHERE username = ? AND password = ?";
-    private static final String USER_ID_QUERY = "SELECT id, username FROM user WHERE id = ?";
-    private static final String USER_USERNAME_QUERY = "SELECT id, username FROM user WHERE username = ?";
-    private static final String USER_REGISTER = "INSERT INTO user (username, password) VALUES(?, ?)";
+    private static final String USER_ID_QUERY = "SELECT id, username, adminStatus FROM user WHERE id = ?";
+    private static final String USER_USERNAME_QUERY = "SELECT id, username, adminStatus FROM user WHERE username = ?";
+    private static final String USER_REGISTER = "INSERT INTO user (username, password, adminStatus) VALUES(?, ?, 0)";
     
     private Connection connection;
     
@@ -64,7 +64,7 @@ public class LoginDAO {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                user = new User(resultSet.getInt(1), resultSet.getString(2));
+                user = new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3));
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,7 +79,8 @@ public class LoginDAO {
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                user = new User(resultSet.getInt(1), resultSet.getString(2));
+                user = new User(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3));
+                System.out.println(resultSet.getInt(3));
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginDAO.class.getName()).log(Level.SEVERE, null, ex);

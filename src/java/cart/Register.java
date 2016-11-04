@@ -8,6 +8,9 @@ package cart;
 import db.ConnectionDB;
 import db.LoginDAO;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,9 +46,19 @@ public class Register extends HttpServlet {
         User newUser = new User(username, password);
         
         connectionDB = new ConnectionDB(realPath);
+        try {
+            connectionDB.getConnection().setAutoCommit(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
         loginDAO = new LoginDAO(connectionDB.getConnection());
         
         LoginDAO.MESSAGE_CODE register_state = loginDAO.registerUser( newUser );
+        try {
+            connectionDB.getConnection().commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
         connectionDB.close();
         
         

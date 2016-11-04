@@ -13,5 +13,5 @@
             <%= SessionBean.getNB_SESSIONS()%> 
         </label>
     </div>
-
+    
 </div>

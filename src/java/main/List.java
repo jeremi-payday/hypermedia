@@ -36,11 +36,14 @@ public class List extends HttpServlet {
         context = getServletContext();
         inputStream = context.getResourceAsStream(filename);
         this.items = new Vector<Item>();
-        try{
-            initItems();
-        }catch(IOException e){
-            e.printStackTrace();
+        if(context.getAttribute("featuredItem") == null){
+            try{
+                initItems();
+            }catch(IOException e){
+                e.printStackTrace();
+            }
         }
+        
     }
     
     @Override
@@ -48,6 +51,10 @@ public class List extends HttpServlet {
             throws ServletException, IOException {
         
         User user = (User)request.getSession().getAttribute("user");
+        if(user == null){
+            response.sendRedirect("index.jsp");
+            return;
+        }
         String username = user.getUsername();
         if(username != null){
             FlashSession fs;
