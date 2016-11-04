@@ -5,12 +5,14 @@
  */
 package main;
 
-import java.io.BufferedReader;
+import db.ConnectionDB;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,23 +27,18 @@ import misc.FlashSession;
  */
 @WebServlet(name = "List", urlPatterns = {"/list"})
 public class List extends HttpServlet {
-
+    
+    private static String SELECT_PRODUCTS = "SELECT id, name, description, imgfilename FROM product";
     Vector<Item> items;
     String filename = "/WEB-INF/items.txt";
     ServletContext context;
-    InputStream inputStream;
     
     @Override
     public void init(){
         context = getServletContext();
-        inputStream = context.getResourceAsStream(filename);
         this.items = new Vector<Item>();
         if(context.getAttribute("featuredItem") == null){
-            try{
-                initItems();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
+            initItems();
         }
         
     }
@@ -76,21 +73,20 @@ public class List extends HttpServlet {
         request.setAttribute("items", this.items);
     }
     
-    private void initItems()throws IOException{
-        BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
-        try{
-            String item = bf.readLine();
-            do{
-                StringTokenizer st = new StringTokenizer(item, ";");
-                this.items.add(new Item(Integer.parseInt(st.nextToken()), 
-                        st.nextToken(), st.nextToken(), st.nextToken()));
-                
-                item = bf.readLine();
-            }while(item != null);
-        }finally{
-            bf.close();
+    private void initItems(){
+        String realPath = getServletContext().getRealPath( "WEB-INF/sqlite.db" );
+        ConnectionDB connection = new ConnectionDB(realPath);
+        try {
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(SELECT_PRODUCTS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            String imgDirectory = "img/items/";
+            while(resultSet.next()){
+                this.items.add(new Item(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3),imgDirectory +resultSet.getString(4)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(List.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } 
 
 
     @Override
